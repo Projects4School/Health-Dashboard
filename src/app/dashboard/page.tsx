@@ -61,7 +61,7 @@ export default async function Page() {
                     <span className={'text-8xl my-2 font-light'}>{moment().format('D')}</span>
                 </h1>
                 <div className={'flex'}>
-                    <div className={'bg-secondary p-1 rounded'}></div>
+                    <div className={'bg-secondary p-1 rounded content-none'}></div>
                     <p className={'p-4 align-middle font-semibold'}>Hi Chef, you have <span className="opacity-50">13 meetings</span> today</p>
                 </div>
             </div>
