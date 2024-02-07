@@ -14,6 +14,6 @@ jobs:
         with:
           deploy_key: ${{ secrets.SSH_DEPLOY_KEY }}
           publish_dir: .
-          external_repository: EvilBrain/Healh-Dashboard
+          external_repository: EvilBrain/Health-Dashboard
           publish_branch: main
           allow_empty_commit: true
