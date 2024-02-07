@@ -1,9 +1,9 @@
 'use client';
 
 import {
-    TableCellsIcon,
     ChartPieIcon,
     UsersIcon,
+    RectangleGroupIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -15,7 +15,8 @@ const links = [
 	{ 
         name: 'Dashboard', 
         href: '/dashboard', 
-        icon: TableCellsIcon },
+        icon: RectangleGroupIcon 
+    },
 	{
 		name: 'Statistics',
 		href: '/dashboard/stats',
