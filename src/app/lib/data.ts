@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { Patient } from "./definitions";
+import { Patient } from "@/app/lib/definitions";
 
 export async function fetchPatients() {
     try {
