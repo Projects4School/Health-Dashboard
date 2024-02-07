@@ -19,6 +19,9 @@ const config: Config = {
 				secondary: "#67CCCC",
 				swhite: "#EDF5F5"
 			},
+			borderRadius: {
+				"4xl": "2rem",
+			},
 		},
 	},
 	plugins: [],

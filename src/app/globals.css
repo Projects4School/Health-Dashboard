@@ -5,17 +5,19 @@
 :root {
   --primary-color: #022E33;
   --secondary-color: #67CCCC;
+  --text-color: #162822;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --primary-color: #022E33;
     --secondary-color: #67CCCC;
+    --text-color: #162822;
   }
 }
 
 body {
-  color: white;
+  color: var(--text-color);
   background: var(--primary-color);
 }
 
@@ -23,4 +25,32 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.masked-overflow {
+  --mask-height: 32px;
+  overflow-y: hidden;
+  height: 300px;
+  padding-bottom: var(--mask-height);
+  --mask-image-content: linear-gradient(
+      to bottom,
+      black var(--mask-height),
+      black calc(100% - var(--mask-height)),
+      transparent
+  );
+
+  /* Here we scale the content gradient to the width of the container 
+minus the scrollbar width. The height is the full container height */
+  --mask-size-content: 100% 100%;
+
+  /* Apply the mask image and mask size variables */
+  mask-image: var(--mask-image-content);
+  mask-size: var(--mask-size-content);
+
+  /* Position the content gradient in the top left, and the 
+scroll gradient in the top right */
+  mask-position: 0 0, 100% 0;
+
+  /* We don't repeat our mask images */
+  mask-repeat: no-repeat, no-repeat;
 }

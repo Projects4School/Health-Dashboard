@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="w-full">
                 <TopNav />
             </div>
-            <main className="flex-grow h-full rounded-t-3xl p-6 w-full bg-swhite">{children}</main>
+            <main className="flex-grow h-full rounded-t-3xl p-10 pt-16 w-full bg-swhite">{children}</main>
         </div>
     );
 }
