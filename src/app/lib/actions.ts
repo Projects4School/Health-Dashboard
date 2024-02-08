@@ -57,7 +57,7 @@ export async function createPatient(prevState: State, formData: FormData) {
     
     const { firstname, lastname, gender, email } = validatedFields.data;
     const imageurl = faker.image.avatarLegacy();
-    const genderId = gender == 'male' ? 1 : 0;
+    const genderId = gender == 'male' ? 1 : 2;
     
     try {
         await sql`
@@ -69,6 +69,44 @@ export async function createPatient(prevState: State, formData: FormData) {
         return {
             message: 'Database Error: Failed to Create Patient.',
         };
+    }
+    
+    revalidatePath('/dashboard/patients');
+    redirect('/dashboard/patients');
+}
+
+const UpdatePatient = FormSchema.omit({ id: true });
+
+export async function updatePatient(
+    id: string,
+    prevState: State,
+    formData: FormData,
+) {
+    const validatedFields = UpdatePatient.safeParse({
+        firstname: formData.get('firstname'),
+        lastname: formData.get('lastname'),
+        gender: formData.get('gender'),
+        email: formData.get('email'),
+    });
+    
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Update Patient.',
+        };
+    }
+    
+    const { firstname, lastname, gender, email } = validatedFields.data;
+    const genderId = gender == 'male' ? 1 : 2;
+    
+    try {
+        await sql`
+        UPDATE patients
+        SET firstname = ${firstname}, lastname = ${lastname}, gender = ${genderId}, email = ${email}
+        WHERE id = ${id}
+        `;
+    } catch (error) {
+        return { message: 'Database Error: Failed to Update Patient.' };
     }
     
     revalidatePath('/dashboard/patients');

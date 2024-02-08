@@ -17,7 +17,7 @@ export function UpdatePatient({ id }: { id: string }) {
     return (
         <Link
             href={`/dashboard/patients/${id}/edit`}
-            className="rounded-md border p-2 hover:bg-gray-100"
+            className="rounded-xl transition-all bg-secondary p-2 hover:bg-opacity-80"
         >
             <PencilIcon className="w-5" />
         </Link>

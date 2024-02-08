@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { Patient } from "@/app/lib/definitions";
+import { PatientForm, Patient } from "@/app/lib/definitions";
 
 export async function fetchPatients() {
     try {
@@ -51,6 +51,26 @@ export async function fetchFilteredPatients(
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch patients.');
+    }
+}
+
+export async function fetchPatientById(id: string) {
+    try {
+        const data = await sql<PatientForm>`
+        SELECT
+            patients.id,
+            patients.firstname,
+            patients.lastname,
+            patients.gender,
+            patients.email
+        FROM patients
+        WHERE patients.id = ${id};
+        `;
+
+        return data.rows[0];
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch patient.');
     }
 }
 

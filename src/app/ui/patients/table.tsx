@@ -2,6 +2,7 @@ import Image from 'next/image';
 //import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import { fetchFilteredPatients } from '@/app/lib/data';
 import { getGender } from '@/app/lib/utils';
+import { UpdatePatient } from './buttons';
 
 export default async function PatientsTable({
     query,
@@ -39,8 +40,8 @@ export default async function PatientsTable({
                             </div>
                             <div className="flex w-full items-center justify-between pt-4">
                                 <div className="flex justify-end gap-2">
-                                    {/*<UpdateInvoice id={invoice.id} />
-                                    <DeleteInvoice id={invoice.id} />*/}
+                                    <UpdatePatient id={patient.id} />
+                                    {/*<DeleteInvoice id={invoice.id} />*/}
                                 </div>
                             </div>
                         </div>
@@ -98,8 +99,8 @@ export default async function PatientsTable({
                                 </td>
                                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                     <div className="flex justify-end gap-3">
-            {/*                             <UpdateInvoice id={invoice.id} />
-                                        <DeleteInvoice id={invoice.id} /> */}
+                                        <UpdatePatient id={patient.id} />
+                                        {/*<DeleteInvoice id={invoice.id} /> */}
                                     </div>
                                 </td>
                             </tr>

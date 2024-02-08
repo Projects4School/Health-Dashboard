@@ -1,16 +1,27 @@
 'use client';
 
+import { PatientForm } from '@/app/lib/definitions';
+import {
+  CheckIcon,
+  ClockIcon,
+  CurrencyDollarIcon,
+  UserCircleIcon,
+} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { createPatient } from '@/app/lib/actions';
+import { updatePatient } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 
-export default function Form() {
+export default function EditInvoiceForm({
+    patient,
+}: {
+    patient: PatientForm;
+}) {
     const initialState = { message: "", errors: {} };
-    const [state, dispatch] = useFormState(createPatient, initialState);
-
+    const updateInvoiceWithId = updatePatient.bind(null, patient.id);
+    const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
     return (
-        <form action={dispatch}>
+         <form action={dispatch}>
             <div className="rounded-2xl bg-gray-50 p-6 grid grid-cols-4 gap-4">
                 <div className="col-span-2">
                     <label htmlFor="lastname" className="mb-2 block text-sm font-medium">
@@ -25,6 +36,7 @@ export default function Form() {
                             placeholder="Enter last name"
                             className="block w-full rounded-xl border border-primary border-opacity-20 py-2 px-4 text-sm outline-secondary placeholder:text-gray-500"
                             required
+                            defaultValue={patient.lastname}
                         />
                     </div>
                     <div id="lastname-error" aria-live="polite" aria-atomic="true">
@@ -49,6 +61,7 @@ export default function Form() {
                             placeholder="Enter first name"
                             className="block w-full rounded-xl border border-primary border-opacity-20 py-2 px-4 text-sm outline-secondary placeholder:text-gray-500"
                             required
+                            defaultValue={patient.firstname}
                         />
                     </div>
                     <div id="firstname-error" aria-live="polite" aria-atomic="true">
@@ -74,6 +87,7 @@ export default function Form() {
                             placeholder="Enter email adress"
                             className="block w-full rounded-xl border border-primary border-opacity-20 py-2 px-4 text-sm outline-secondary placeholder:text-gray-500"
                             required
+                            defaultValue={patient.email}
                         />
                     </div>
                     <div id="email-error" aria-live="polite" aria-atomic="true">
@@ -98,6 +112,7 @@ export default function Form() {
                                     type="radio"
                                     value="male"
                                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 outline-secondary accent-secondary ring-secondary"
+                                    defaultChecked={patient.gender === 1}
                                 />
                                 <label
                                     htmlFor="male"
@@ -113,6 +128,7 @@ export default function Form() {
                                     type="radio"
                                     value="female"
                                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 outline-secondary accent-secondary"
+                                    defaultChecked={patient.gender === 2}
                                 />
                                 <label
                                     htmlFor="female"
@@ -147,7 +163,7 @@ export default function Form() {
                 >
                     Cancel
                 </Link>
-                <Button type="submit">Create Patient</Button>
+                <Button type="submit">Edit Patient</Button>
             </div>
         </form>
     );
