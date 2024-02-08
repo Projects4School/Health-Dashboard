@@ -18,8 +18,8 @@ export default function EditInvoiceForm({
     patient: PatientForm;
 }) {
     const initialState = { message: "", errors: {} };
-    const updateInvoiceWithId = updatePatient.bind(null, patient.id);
-    const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
+    const updatePatientWithId = updatePatient.bind(null, patient.id);
+    const [state, dispatch] = useFormState(updatePatientWithId, initialState);
     return (
          <form action={dispatch}>
             <div className="rounded-2xl bg-gray-50 p-6 grid grid-cols-4 gap-4">

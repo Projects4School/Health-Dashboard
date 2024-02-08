@@ -112,3 +112,13 @@ export async function updatePatient(
     revalidatePath('/dashboard/patients');
     redirect('/dashboard/patients');
 }
+
+export async function deletePatient(id: string) {
+    try {
+        await sql`DELETE FROM patients WHERE id = ${id}`;
+        revalidatePath('/dashboard/patients');
+        return { message: 'Deleted Patient.' };
+    } catch (error) {
+        return { message: 'Database Error: Failed to Delete Patient.' };
+    }
+}
