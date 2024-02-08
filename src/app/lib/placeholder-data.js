@@ -1,5 +1,16 @@
 const { faker } = require('@faker-js/faker');
 
+module.exports.getUsers = () => {
+    return [
+        {
+            firstname: "Gaspar",
+            lastname: "Musitelli",
+            email: "gmusitelli@health.org",
+            password: "123456"
+        },
+    ]
+}
+
 function getRandomPatient() {
     let gender = faker.person.sexType(),
         firstname = faker.person.firstName(gender),

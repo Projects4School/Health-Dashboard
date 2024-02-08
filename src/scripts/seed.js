@@ -1,13 +1,53 @@
 const { db } = require('@vercel/postgres');
 const {
-    getListOfPatients
+    getListOfPatients, getUsers
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
+
+async function seedUsers(client) {
+    try {
+        await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+        // Create the "users" table if it doesn't exist
+        const createTable = await client.sql`
+            CREATE TABLE IF NOT EXISTS users (
+                id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+                firstname VARCHAR(255) NOT NULL,
+                lastname VARCHAR(255) NOT NULL,
+                email TEXT NOT NULL UNIQUE,
+                password TEXT NOT NULL
+            );
+        `;
+
+        console.log(`Created "users" table`);
+
+        // Insert data into the "users" table
+        const insertedUsers = await Promise.all(
+            getUsers().map(async (user) => {
+                const hashedPassword = await bcrypt.hash(user.password, 10);
+                return client.sql`
+                    INSERT INTO users (firstname, lastname, email, password)
+                    VALUES (${user.firstname}, ${user.lastname}, ${user.email}, ${hashedPassword})
+                    ON CONFLICT (id) DO NOTHING;
+                `;
+            }),
+        );
+
+        console.log(`Seeded ${insertedUsers.length} users`);
+
+        return {
+            createTable,
+            users: insertedUsers,
+        };
+    } catch (error) {
+        console.error('Error seeding users:', error);
+        throw error;
+    }
+}
 
 async function seedPatients(client) {
     try {
         await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-        // Create the "users" table if it doesn't exist
+        // Create the "patients" table if it doesn't exist
         const createTable = await client.sql`
         CREATE TABLE IF NOT EXISTS patients (
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -21,7 +61,7 @@ async function seedPatients(client) {
 
         console.log(`Created "patients" table`);
 
-        // Insert data into the "users" table
+        // Insert data into the "patients" table
         const insertedPatients = await Promise.all(
             getListOfPatients(10).map(async (patient) => {
                 return client.sql`
@@ -45,11 +85,12 @@ async function seedPatients(client) {
 }
 
 async function main() {
-  const client = await db.connect();
+    const client = await db.connect();
 
-  await seedPatients(client);
+    await seedPatients(client);
+    await seedUsers(client);
 
-  await client.end();
+    await client.end();
 }
 
 main().catch((err) => {
