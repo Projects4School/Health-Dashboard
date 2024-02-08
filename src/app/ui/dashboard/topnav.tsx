@@ -5,8 +5,16 @@ import Image from 'next/image';
 export default function SideNav() {
     return (
         <div className="flex w-full flex-row items-center px-3 py-4">
-            <div>
-                icon
+            <div className="px-2">
+                <Link href="/" className="grayscale transition-all hover:grayscale-0">
+                    <Image 
+                        src={'/logo.svg'} 
+                        alt="Logo"
+                        width={40}
+                        height={40}
+                        priority
+                    />
+                </Link>
             </div>
             <div className="flex-1 flex justify-center px-2 gap-2">
                 <NavLinks />
