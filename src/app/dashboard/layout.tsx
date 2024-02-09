@@ -1,6 +1,6 @@
 import TopNav from '@/app/ui/dashboard/topnav';
  
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="flex flex-col h-screen">
             <div className="w-full">
